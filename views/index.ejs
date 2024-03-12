@@ -1,0 +1,21 @@
+<html lang="en">
+<head>
+    <title>Node js exercises</title>
+</head>
+<body>
+    <div>
+        <h2>All items</h2>
+
+        <% if(items.length > 0) { %>
+            <% items.forEach(item => { %>
+                <a href="/views/items.ejs"><%= item._id  %></a>
+                <h3><%= item.name %></h3>
+                <h6><%= item.price %></h6>
+                <p><%= item.description %></p>
+            <%}) %>
+        <%} else { %>
+            <p>There's no items...</p>
+       <% } %>
+    </div>
+</body>
+</html>

@@ -8,10 +8,11 @@
 
         <% if(items.length > 0) { %>
             <% items.forEach(item => { %>
-                <a href="/views/items.ejs"><%= item._id  %></a>
-                <h3><%= item.name %></h3>
-                <h6><%= item.price %></h6>
-                <p><%= item.description %></p>
+                <a href="/views/items.ejs"><%= item._id  %>
+                    <h3><%= item.name %></h3>
+                    <h6><%= item.price %></h6>
+                    <p><%= item.description %></p>
+                </a>
             <%}) %>
         <%} else { %>
             <p>There's no items...</p>

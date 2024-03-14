@@ -21,17 +21,18 @@ const getItemById = (req, res) => {
 }
 
 const postItem = (req, res) => {
-    const item = new Item(req.body)
+    const post = new Item({
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price
+    })
 
-    item.save()
-        // .then((result) => {
-        //     res.redirect('/form')
-        // })
-        .then((result) => {
-            res.json({ newItem: result})
+    post.save()
+        .then(data => {
+            res.json(data)
         })
-        .catch((err) => {
-           console.log(err) 
+        .catch(err => {
+            res.json({ message: err})
         })
 }
 

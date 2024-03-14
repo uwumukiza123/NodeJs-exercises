@@ -2,12 +2,11 @@ const express = require('express')
 const mongoose = require('mongoose')
 const itemRoutes = require('./router/itemRoutes')
 const morgan = require('morgan')
+require('dotenv/config')
 
 const app = express()
 
-const dbURI = "mongodb+srv://netNinja:netNinja123@cluster0.nlx1am2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-
-mongoose.connect(dbURI)
+mongoose.connect(process.env.DB_CONNECTION)
     .then(result => app.listen(3000))
     .catch(err => console.log(err))
 
@@ -21,4 +20,8 @@ app.use("/items", itemRoutes)
 
 app.get('/form', (req, res) => {
     res.render('form')
+})
+
+app.post('/post', (req, res)=> {
+    console.log(req.body)
 })

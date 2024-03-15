@@ -1,11 +1,13 @@
 const Item = require('../models/item')
 
-const getItems = (req, res) => {
-    Item.find().sort({ createdAt: -1})
-        .then((result)=> {
-            res.render('/', { item: result})
+const getAllItems = (req, res) => {
+    Item.find()
+        .then(result => {
+            res.json(result)
         })
-        .catch((err) =>  console.log(err))
+        .catch((err) => {
+            res.json({ message: err})
+        })
 }
 
 const getItemById = (req, res) => {
@@ -13,10 +15,10 @@ const getItemById = (req, res) => {
 
     Item.findById(id)
         .then((result) => {
-            res.render('/', { item: result})
+            res.json(result)
         })
         .catch((err)=> {
-            res.status(404).render('404')
+            res.json({ message: err})
         })
 }
 
@@ -36,19 +38,28 @@ const postItem = (req, res) => {
         })
 }
 
-const updateItem = (req, res)=> {
-    const id = req.params.id;
+const updateItem = async(req, res)=> {
+    // const id = req.params.id;
+    // const updatedPost = req.body
+    // Item.findByIdAndUpdate(id, { $set: updatedPost },{ new: true })
+    //     .then((result) => {
+    //         console.log(result)
+    //         res.json(result)
+    //     })
+    //     .catch((err)=> {
+    //         res.json({ message: err})
+    //     })
 
-    Item.updateOne(id)
-        .then((result) => {
-            res.send(result)
-        })
-        .then((result)=> {
-            res.json({ updatedItem: result })
-        })
-        .catch((err)=> {
-            res.status(404).render('404')
-        }) 
+    try {
+        const updatePost = await Item.updateOne(
+            {_id: req.params.id},
+            { $set: { name: req.body.name}}
+            );
+            res.json(updatePost)
+    } catch (err){
+        res.json({ message: err})
+    }
+        
 }
 
 const deleteItem = (req, res) => {
@@ -59,12 +70,12 @@ const deleteItem = (req, res) => {
             res.json({ deletedItem: result})
         })
         .catch((err) => {
-            res.status(404)
+            res.json({ message: err})
         })
 }
 
 module.exports = {
-    getItems,
+    getAllItems,
     getItemById,
     postItem,
     updateItem,

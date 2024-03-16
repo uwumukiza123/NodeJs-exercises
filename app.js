@@ -11,7 +11,8 @@ mongoose.connect(process.env.DB_CONNECTION)
     .catch(err => console.log(err))
 
 
-app.use(express.urlencoded({ extended: true}))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use(morgan('dev'))
 
